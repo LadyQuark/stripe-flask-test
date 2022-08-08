@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container p-5 text-center">
+        <div class="row">
+            <div class="col-12">
+                <h1>Buy a subscription</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Premium Plan</h5>
+                        <p class="card-text">
+                            This a premium plan
+                        </p>
+                        <form action="/create-checkout-session" method="POST">                      
+                            <input type="hidden" name="priceID" value="price_1LQqx3SJW5sw0hdPHSlDYOFL" />
+                            <button type="submit" class="btn btn-primary">
+                                Checkout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

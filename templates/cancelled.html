@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="container p-5 text-center">
+        <h5>Cancelled</h5>
+        {% if status != "" %}
+        <p>
+            {{status}}
+        </p>
+        {% endif %}
+    </div>
+
+{% endblock %}
