@@ -10,5 +10,5 @@ Copy `.env.example` into a file called `.env` in the root folder. Add the API ke
 Run:
 
 ```shell
-	python3 -m flask run --port=4242
+python3 -m flask run --port=4242
 ```
