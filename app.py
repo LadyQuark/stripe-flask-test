@@ -6,6 +6,7 @@ Testing Stripe with Flask to:
     • receive signed webhook notifications for events
 """
 
+from locale import currency
 import stripe
 import os
 import json
@@ -25,6 +26,7 @@ YOUR_DOMAIN = 'http://localhost:4242'
 
 @app.route("/")
 def index():
+    print(request.host_url)
     return render_template("index.html")
 
 
@@ -158,6 +160,45 @@ def create_payment():
 @app.route('/checkout', methods=['GET'])
 def checkout():
     return render_template("checkout.html")
+
+
+def save(self, currentuserid, name, durationWiseCosts, menus):
+    # Default values
+    # possible enum values = ["month", "year", "week", "day"]
+    # interval=month and interval_count=3 bills every 3 months
+    currency = "usd"
+    interval = "month"
+    interval_count = 1
+
+    sub_product = stripe.Product.create(name=name)
+    
+    if sub_product:
+        print(sub_product)
+        # assuming `durationWiseCosts` is in cents 
+        sub_price = stripe.Price.create(
+            unit_amount=durationWiseCosts,
+            currency=currency,
+            recurring={"interval": interval, "interval_count": interval_count},
+            product=sub_product,
+            type="recurring"
+        )
+    else:
+        raise Exception("Stripe: could not create product object")
+    
+    if sub_price:
+        print(sub_price)
+        price_id = sub_price.id
+    else:
+        raise Exception("Stripe: could not create price object")
+    
+    # Save to mongoDB
+    # including price_id
+
+
+    # After getting id from mongoDB
+    mongo_id="1234"
+    sub_product.modify(metadata={"currentSubscriptionId": mongo_id})
+    sub_price.modify(metadata={"currentSubscriptionId": mongo_id})        
 
 
 if __name__== '__main__':
